@@ -15,7 +15,7 @@ Detection Layer:
 
 **CloudWatch Alarm Configuration:**
 
-![CloudWatch Alarm](screenshots/(https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%201.jpg))
+![CloudWatch Alarm](screenshots/https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%201.jpg)
 
 *The alarm triggers when the secret is accessed one or more times within a 1-minute period.*
 
