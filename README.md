@@ -62,7 +62,7 @@ Mimics real attacker behavior (credential theft)
 Created a custom metric filter using JSON pattern matching:
 { ($.eventName = "GetSecretValue") && 
   ($.requestParameters.secretId = "Production_Database_Credentials") }
-Configured CloudWatch Alarm with threshold of ≥1 access in 60-second window. Alarm triggers SNS notification to security team.
+Configured CloudWatch Alarm with a threshold of ≥1 access in a 60-second window. The alarm triggers an SNS notification to the security team.
 
 Key Learnings:
 Metric-based detection provides reliable alerting even with service delays
