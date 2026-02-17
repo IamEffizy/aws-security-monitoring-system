@@ -296,7 +296,7 @@ SNS: Topic creation, email subscriptions, notification delivery
 
 **Email Notification Received:**
 
-![Email Alert](screenshots/https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%203.jpg)
+![Email Alert](https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%203.jpg)
 
 *The automated email alert delivered within 2-3 minutes of secret access.*
 
