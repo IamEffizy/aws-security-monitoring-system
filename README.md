@@ -156,7 +156,7 @@ Alert Context Quality                  Full CloudTrail JSON         Varies
 
 **EventBridge Rule Configuration:**
 
-![EventBridge Rule](screenshots/(https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%202.jpg))
+![EventBridge Rule](screenshots/https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%202.jpg)
 
 *The EventBridge rule with event pattern configured to detect GetSecretValue API calls.*
 
