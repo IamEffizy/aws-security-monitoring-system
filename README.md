@@ -180,10 +180,11 @@ Alert Context Quality                  Full CloudTrail JSON         Varies
 
 Security Improvements
 
-Before Implementation:
-No visibility into Secrets Manager access
-Manual log review required (weekly at best)
-No automated response capability
+Before Implementation: 
+
+No visibility into Secrets Manager access 
+Manual log review required (weekly at best) 
+No automated response capability 
 Days/weeks to detect credential theft
 
 **Victim User Permissions (Before Attack):**
