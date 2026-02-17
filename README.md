@@ -1,4 +1,5 @@
   Project Overview
+
 Designed and implemented an enterprise-grade security monitoring system in AWS that detects unauthorized access to sensitive credentials and automatically neutralizes threats in real-time. This project demonstrates practical cloud security engineering skills applicable to SOC operations, DevSecOps, and cloud infrastructure protection.
 Business Impact:
 
@@ -59,12 +60,13 @@ Zero false positives
 Mimics real attacker behavior (credential theft)
 
 2. Detection Engine (CloudWatch)
-Created a custom metric filter using JSON pattern matching:
+I created a custom metric filter using JSON pattern matching:
 { ($.eventName = "GetSecretValue") && 
-($.requestParameters.secretId = "Production_Database_Credentials") }
+  ($.requestParameters.secretId = "Production_Database_Credentials") }
 Configured CloudWatch Alarm with a threshold of ≥1 access in a 60-second window. The alarm triggers an SNS notification to the security team.
 
 Key Learnings:
+
 Metric-based detection provides reliable alerting even with service delays
 1-minute evaluation period balances speed vs. log ingestion latency
 CloudWatch integration with CloudTrail requires IAM role configuration
