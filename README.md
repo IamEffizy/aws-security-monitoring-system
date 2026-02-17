@@ -11,19 +11,23 @@ Meets compliance requirements for NIST SP 800-137 continuous monitoring
  Architecture
 System Components
 The system integrates seven AWS services into a coordinated security monitoring and response pipeline:
-Detection Layer:
+Detection Layer:  
+
+**CloudWatch Alarm Configuration:**
+
+![CloudWatch Alarm](screenshots/(https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%201.jpg))
+
+*The alarm triggers when the secret is accessed one or more times within a 1-minute period.*
 
 AWS CloudTrail - Multi-region audit logging capturing all API activity
 Amazon CloudWatch - Real-time log analysis with custom metric filters
 Amazon EventBridge - Event-driven detection for sub-minute response times
 
 Response Layer:
-
 AWS Lambda - Serverless function for automated user quarantine (Python 3.12)
 Amazon SNS - Multi-channel notification delivery (email, future: Slack/PagerDuty)
 
 Defense Layer:
-
 AWS Secrets Manager - Honeytoken deployment for credential theft detection
 Amazon IAM - Permission boundaries for attacker containment
 
@@ -45,7 +49,7 @@ Two parallel detection paths:
 Logs stored in S3 for forensic investigation
 [Architecture Diagram](AWS.drawio.png)
 
-🔧 Technical Implementation
+ Technical Implementation
 1. Honeytoken Strategy
 Deployed a realistic-looking secret named "Production_Database_Credentials" in AWS Secrets Manager containing fake database credentials. Any access to this secret triggers detection since no legitimate application references it.
 Why This Works:
@@ -59,8 +63,8 @@ Created a custom metric filter using JSON pattern matching:
 { ($.eventName = "GetSecretValue") && 
   ($.requestParameters.secretId = "Production_Database_Credentials") }
 Configured CloudWatch Alarm with threshold of ≥1 access in 60-second window. Alarm triggers SNS notification to security team.
-Key Learnings:
 
+Key Learnings:
 Metric-based detection provides reliable alerting even with service delays
 1-minute evaluation period balances speed vs. log ingestion latency
 CloudWatch integration with CloudTrail requires IAM role configuration
@@ -77,6 +81,8 @@ json{
     }
   }
 }
+
+
 Troubleshooting Challenge:
 
 Initial implementation showed 0 invocations despite correct syntax
@@ -94,7 +100,8 @@ Apply deny-all permissions boundary (prevents privilege re-escalation)
 Log all actions to CloudWatch for audit trail
 
 Code Snippet:
-pythondef lambda_handler(event, context):
+
+def lambda_handler(event, context):
     iam_client = boto3.client('iam')
     username = event['detail']['userIdentity']['userName']
     
@@ -111,14 +118,21 @@ pythondef lambda_handler(event, context):
         UserName=username,
         PermissionsBoundary=quarantine_policy_arn
     )
-Security Design Considerations:
 
+**Lambda Function in AWS Console:**
+
+![Lambda Function](screenshots/https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%205a.jpg)
+
+*The Lambda kill-switch function deployed and ready to quarantine compromised users.*
+
+
+Security Design Considerations:
 Lambda execution role requires IAMFullAccess (least privilege would use custom policy)
 Deny-all boundary prevents attackers from re-granting themselves permissions
 Function idempotency ensures repeated executions don't cause errors
 
 5. Testing & Validation
-Created simulated attack scenario:
+Created a simulated attack scenario:
 
 Provisioned test IAM user "victim-test-user" with SecretsManagerReadWrite policy
 Accessed honeytoken via AWS CLI
@@ -126,7 +140,6 @@ Verified detection: Received email alert within 2 minutes 38 seconds
 Validated audit trail: CloudTrail captured username, IP address, timestamp, user agent
 
 Test Results:
-
 ✅ CloudWatch detection: 100% success rate
 ⚠️ EventBridge detection: Configured but required additional troubleshooting
 ✅ CloudTrail logging: Complete audit trail with all forensic details
@@ -135,21 +148,44 @@ Test Results:
 
  Results & Metrics
 Detection Performance
-MetricValueIndustry StandardMean Time to Detect (MTTD)2-3 minutes24-48 hours (manual review)False Positive Rate0%5-15% (typical SIEM)Detection Coverage24/7 continuousPoint-in-time scansAlert Context QualityFull CloudTrail JSONVaries
-Security Improvements
-Before Implementation:
+Metric                                 Value                     Industry Standard 
+Mean Time to Detect (MTTD)             2-3 minutes                24-48 hours (manual review)
+False Positive Rate                    0%                         5-15% (typical SIEM) 
+Detection Coverage                     24/7 continuous            Point-in-time scans 
+Alert Context Quality                  Full CloudTrail JSON         Varies
 
+**EventBridge Rule Configuration:**
+
+![EventBridge Rule](screenshots/(https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%202.jpg))
+
+*The EventBridge rule with event pattern configured to detect GetSecretValue API calls.*
+
+
+Security Improvements
+
+Before Implementation:
 No visibility into Secrets Manager access
 Manual log review required (weekly at best)
 No automated response capability
 Days/weeks to detect credential theft
 
-After Implementation:
+**Victim User Permissions (Before Attack):**
 
+![IAM User Before](screenshots/https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%206.jpg)
+
+*The victim-test-user with SecretsManagerReadWrite policy attached before the test.*
+
+After Implementation:
 Real-time monitoring of all secret access
 Automated alerts with complete forensic context
 Sub-minute automated response (when EventBridge resolves)
-Continuous audit trail in S3
+Continuous audit trail in S3 
+
+**Victim User Permissions (Current State):**
+
+![IAM User Current](screenshots/https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%206.jpg)
+
+*Current permissions state showing the user still has the original policy (Lambda did not execute automatically due to EventBridge pattern matching issues).*
 
 Compliance Alignment
 Satisfies multiple NIST SP 800-137 continuous monitoring requirements:
@@ -161,6 +197,7 @@ Monitoring System Health: CloudWatch metrics track detection system uptime
 
 
  Challenges & Solutions
+
 Challenge 1: EventBridge Event Pattern Matching
 Problem: EventBridge rule showed 0 matched events despite correct JSON syntax and CloudTrail confirming events were logged.
 Troubleshooting Methodology:
@@ -188,6 +225,13 @@ json{
   }
 }
 
+**CloudTrail Event in AWS Console:**
+
+![CloudTrail Event](https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%203%2B.jpg)
+
+*The CloudTrail event showing the victim-test-user accessing the honeytoken secret.*
+
+
 Lesson Learned: Production systems require redundant detection paths. When primary mechanism (EventBridge direct) failed, secondary mechanism (CloudWatch bridge) provided reliable triggering. This demonstrates defense-in-depth principle.
 Challenge 2: Lambda Execution Validation
 Problem: Without EventBridge automatically triggering Lambda, validating the quarantine code required alternative testing approaches.
@@ -201,8 +245,9 @@ json{
     }
   }
 }
-This confirmed:
 
+
+This confirmed:
 Lambda has correct IAM permissions to modify user policies
 Code logic properly extracts usernames from events
 Policy detachment and boundary application APIs execute successfully
@@ -237,7 +282,7 @@ Technical Problem-Solving
 Systematic troubleshooting using AWS monitoring tools
 Reading and interpreting CloudWatch metrics
 Event pattern debugging (JSON syntax, field matching)
-Alternative solution design when primary approach fails
+Alternative solution design when the primary approach fails
 
 AWS Service Expertise
 
@@ -248,6 +293,12 @@ Lambda: Python 3.12, boto3 SDK, IAM API calls, CloudWatch logging
 IAM: Policy management, permissions boundaries, least privilege
 Secrets Manager: Secret creation, access patterns, honeytoken strategy
 SNS: Topic creation, email subscriptions, notification delivery
+
+**Email Notification Received:**
+
+![Email Alert](screenshots/https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%203.jpg)
+
+*The automated email alert delivered within 2-3 minutes of secret access.*
 
 
  Future Enhancements
