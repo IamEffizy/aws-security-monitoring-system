@@ -73,7 +73,9 @@ aws secretsmanager get-secret-value --secret-id Production_Database_Credentials 
 - **Where:** My IP address
 - **How:** AWS CLI
 
-![CloudTrail Event](https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%203.jpg)
+![CloudTrail Event](https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%203.jpg) 
+![CloudTrail Event](https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%203%2B.jpg)
+
 *CloudTrail event showing the complete forensic details of the secret access*
 
 ---
@@ -122,7 +124,7 @@ iam_client.put_user_permissions_boundary(
 ```
 ![Lambda Function](https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%205b.jpg)
 
-![Lambda Function](screenshots/lambda-function.png)
+![Lambda Function](https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%205a.jpg)
 *Lambda function code deployed for automated incident response*
 
 ### Test Results
@@ -131,18 +133,18 @@ iam_client.put_user_permissions_boundary(
 - User had `SecretsManagerReadWrite` policy
 - No permissions boundary
 
-![IAM User Before](screenshots/iam-user-before.png)
+![IAM User Before](https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%206.jpg)
 *Victim user permissions before the test*
 
 **Current State:**
 The Lambda function was configured but did not execute automatically during testing due to EventBridge pattern matching challenges (detailed in Lessons Learned section).
 
-![IAM User Current](screenshots/iam-user-current.png)
+![IAM User Current](https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%206.jpg)
 *Current user permissions showing Lambda did not trigger*
 
 ---
 
-## 📊 Results & Analysis
+##  Results & Analysis
 
 ### Performance Metrics
 
@@ -170,14 +172,14 @@ The Lambda function was configured but did not execute automatically during test
 ### NIST Compliance
 
 This system aligns with **NIST SP 800-137** continuous monitoring requirements:
-- ✅ **Ongoing awareness** - 24/7 automated monitoring
-- ✅ **Timely response** - Minutes vs. days/weeks
-- ✅ **Audit trail integrity** - Immutable CloudTrail logs in S3
-- ✅ **System health monitoring** - CloudWatch metrics track detection system uptime
+-  **Ongoing awareness** - 24/7 automated monitoring
+-  **Timely response** - Minutes vs. days/weeks
+-  **Audit trail integrity** - Immutable CloudTrail logs in S3
+-  **System health monitoring** - CloudWatch metrics track detection system uptime
 
 ---
 
-## 🚧 Challenges & Solutions
+##  Challenges & Solutions
 
 ### Challenge 1: EventBridge Pattern Matching
 
@@ -210,7 +212,7 @@ Used Lambda's built-in test feature with custom event payload mimicking CloudTra
 
 ---
 
-## 🎓 Skills Demonstrated
+##  Skills Demonstrated
 
 ### Cloud Security Architecture
 - Multi-service integration (7 AWS services orchestrated)
@@ -234,7 +236,7 @@ Used Lambda's built-in test feature with custom event payload mimicking CloudTra
 
 ---
 
-## 🔄 Future Enhancements
+##  Future Enhancements
 
 If deploying to production, I would add:
 
@@ -253,23 +255,10 @@ If deploying to production, I would add:
 - Alerts on monitoring system health
 - Weekly automated testing to validate detection paths
 
----
-
-## 🛠️ Tech Stack
-
-![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
-![CloudWatch](https://img.shields.io/badge/CloudWatch-%23FF4F8B.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
-![Lambda](https://img.shields.io/badge/Lambda-%23FF9900.svg?style=for-the-badge&logo=aws-lambda&logoColor=white)
-
-**Core Technologies:**
-- AWS CloudTrail, CloudWatch, EventBridge, Lambda, SNS, Secrets Manager, IAM
-- Python 3.12, Boto3 SDK
-- Infrastructure as Code principles
 
 ---
 
-## 📞 Connect
+##  Connect
 
 I'm happy to discuss:
 - Cloud security architecture
@@ -278,17 +267,12 @@ I'm happy to discuss:
 - Lessons learned from troubleshooting
 
 **GitHub:** [github.com/IamEffizy](https://github.com/IamEffizy)  
-**LinkedIn:** [Your LinkedIn Profile]  
-**Email:** [Your Email]
+**LinkedIn:** [https://www.linkedin.com/in/okon-effiong/]  
+**Email:** effizino1@gmail.com
+
 
 ---
 
-## 📝 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
----
-
-**⭐ If you found this project interesting, please star the repository!**
+** If you found this project interesting, please star the repository!**
 
 *Last Updated: February 2026*
