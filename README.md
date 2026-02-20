@@ -49,15 +49,15 @@ This project demonstrates real-world cloud security engineering skills using AWS
 4. Complete audit trail stored in S3 for investigation
 ```
 
-![CloudWatch Alarm Configuration](screenshots/cloudwatch-alarm.png)
+![CloudWatch Alarm Configuration](https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%201.jpg)
 *CloudWatch alarm configuration showing threshold and SNS integration*
 
-![EventBridge Rule](screenshots/eventbridge-rule.png)
+![EventBridge Rule](https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%202.jpg)
 *EventBridge rule with event pattern for detecting secret access*
 
 ---
 
-## 🔍 The Evidence
+##  The Evidence
 
 ### What Happened During Testing
 
@@ -73,12 +73,12 @@ aws secretsmanager get-secret-value --secret-id Production_Database_Credentials 
 - **Where:** My IP address
 - **How:** AWS CLI
 
-![CloudTrail Event](screenshots/cloudtrail-event.png)
+![CloudTrail Event](https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%203.jpg)
 *CloudTrail event showing the complete forensic details of the secret access*
 
 ---
 
-## ✅ Detection Results
+##  Detection Results
 
 ### Email Alert Received
 
@@ -88,12 +88,12 @@ Within **2 minutes and 38 seconds** of the simulated attack, I received an autom
 - AWS region where the event occurred
 - Link to CloudWatch for investigation
 
-![Email Notification](screenshots/email-alert.png)
+![Email Notification](https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%204.jpg)
 *Automated email alert delivered via SNS*
 
 ---
 
-## 🤖 Automated Response
+##  Automated Response
 
 ### Lambda Kill-Switch Function
 
@@ -120,6 +120,7 @@ iam_client.put_user_permissions_boundary(
     PermissionsBoundary=quarantine_policy_arn
 )
 ```
+![Lambda Function](https://github.com/IamEffizy/aws-security-monitoring-system/blob/main/screenshots/Screenshot%205b.jpg)
 
 ![Lambda Function](screenshots/lambda-function.png)
 *Lambda function code deployed for automated incident response*
