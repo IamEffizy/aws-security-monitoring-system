@@ -4,21 +4,21 @@
 
 ---
 
-## 🎯 Overview
+##  Overview
 
 **Built an automated cloud security system that detects credential theft in under 3 minutes and automatically neutralizes threats.**
 
 This project demonstrates real-world cloud security engineering skills using AWS-native services to create a production-ready monitoring and incident response system.
 
 **Key Achievements:**
-- ⚡ Detection time: **2-3 minutes** (vs. industry average of 24-48 hours)
-- 🎯 False positive rate: **0%** (honeytoken-based detection)
-- 🤖 Automated response: **90-second** attacker quarantine
-- 🔄 **24/7** continuous monitoring with zero human intervention
+-  Detection time: **2-3 minutes** (vs. industry average of 24-48 hours)
+-  False positive rate: **0%** (honeytoken-based detection)
+-  Automated response: **90-second** attacker quarantine
+-  **24/7** continuous monitoring with zero human intervention
 
 ---
 
-## 🏗️ Architecture
+##  Architecture
 
 ### System Components
 
