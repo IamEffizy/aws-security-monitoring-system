@@ -1,6 +1,6 @@
 # AWS Security Monitoring & Automated Incident Response
 
-![AWS Architecture]<img width="566" height="960" alt="Image" src="https://github.com/user-attachments/assets/26327189-50df-49f3-807d-631b464058d2" />
+[AWS Architecture]<img width="566" height="960" alt="Image" src="https://github.com/user-attachments/assets/26327189-50df-49f3-807d-631b464058d2" />
 
 ---
 
